@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import { useFetchRacingInfo } from '../hooks/useFetchRacingInfo';
+import Table from '../components/Table/Table';
+import Dropdown from '../components/Dropdown/Dropdown';
+import Flex from '../components/Flex/Flex';
+import Spinner from '../components/Spinner/Spinner';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedBetType, setSelectedBetType] = useState('');
+  const { data, loading, error } = useFetchRacingInfo(selectedBetType);
+  console.log(data, ' DATA');
+
+  const handleSelectBetType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedBetType(e.target.value);
+  };
+
+  const RenderData = () => {
+    if (loading) return <Spinner />;
+    if (error) return <h2>{error}</h2>;
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Flex direction="row" justify="space-between">
+        <Dropdown
+          propOptions={[{ value: 'V75' }, { value: 'V86' }, { value: 'GS75' }]}
+          onChange={(e) => handleSelectBetType(e)}
+        />
+        <h3>{selectedBetType}</h3>
+      </Flex>
+
+      <Table>{<RenderData />}</Table>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
