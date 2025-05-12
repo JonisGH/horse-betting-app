@@ -1,5 +1,4 @@
 .dropdown {
-  display: flex;
-  align-self: flex-start;
   min-width: 10vw;
+  max-height: 30px;
 }

@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
+import type { BettingData } from '../types/Types';
 
 export const useFetchRacingInfo = (betType: string) => {
-  const [data, setData] = useState<[] | null>(null);
+  const [data, setData] = useState<BettingData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
-  /* const prunedData = data?.map((cleanData) => {
-    return {betType: cleanData.betType};
-  }); */
 
   useEffect(() => {
     if (!betType) return;
