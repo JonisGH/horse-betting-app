@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../Dropdown/Dropdown.module.css';
+import './Dropdown.css';
 
 type PropOption = {
   value: string | number;
@@ -13,7 +13,7 @@ type DropdownProps = {
 
 const Dropdown = ({ propOptions, onChange }: DropdownProps) => {
   return (
-    <select className={styles.dropdown} onChange={onChange}>
+    <select className="dropdown" onChange={onChange}>
       <option value="">...</option>
       {propOptions.map((option) => (
         <option key={option.value} value={option.value}>

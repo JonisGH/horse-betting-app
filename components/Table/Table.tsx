@@ -19,11 +19,13 @@ const Table = (props: TableProps) => {
   const { data } = props;
   const [mostRecentResult, setMostRecentResult] = useState<MostRecentResultType | undefined>();
   const { time, date } = useFormatDate(mostRecentResult?.startTime);
+  console.log(data, ' DATA');
+  console.log(mostRecentResult, ' MOST RECENT RESULTS');
 
   useEffect(() => {
-    const filteredResults = data?.results
-      .filter((result) => result.id.startsWith(`${data.betType}_`))
-      .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime())[0];
+    const filteredResults = data?.upcoming.sort(
+      (a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime(),
+    )[0];
 
     if (filteredResults)
       setMostRecentResult({
@@ -31,20 +33,25 @@ const Table = (props: TableProps) => {
         startTime: filteredResults.startTime,
         tracks: filteredResults.tracks,
       });
+    console.log(filteredResults?.races, ' RACES ');
   }, [data]);
 
   return (
     <div className="tableContainer">
-      <Flex direction="column">
-        <Flex className="resultContainer" direction="row" justify="space-evenly">
-          <Flex gap={12} align="center">
-            {mostRecentResult?.tracks?.map((field) => {
-              return <h3>{field.name}</h3>;
-            })}
-            -<b>{time}</b>
-            <i>{date}</i>
-          </Flex>
-        </Flex>
+      <Flex className="resultContainer" direction="column" align="center">
+        {mostRecentResult?.tracks?.map((field) => {
+          return (
+            <div key={field.id}>
+              <Flex gap={12} align="center" className="bottomBorder">
+                <h3>{field.name}</h3> -<b>{time}</b>
+                <i>{date}</i>
+              </Flex>
+              {/* TODO: Make better containers (Rejs info div should display races.name from games endpoint) */}
+              <div style={{ width: '100%', background: '#333', color: '#f8f8f8' }}>REJS INFO</div>
+              {/* TODO: fetch info from games endpoint here for more horse data */}
+            </div>
+          );
+        })}
       </Flex>
       {props.children}
     </div>

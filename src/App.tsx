@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFetchRacingInfo } from '../hooks/useFetchRacingInfo';
+import useFetchTrackInfo from '../hooks/useFetchTrackInfo';
 import Table from '../components/Table/Table';
 import Dropdown from '../components/Dropdown/Dropdown';
 import Flex from '../components/Flex/Flex';
@@ -7,8 +7,7 @@ import './App.css';
 
 function App() {
   const [selectedBetType, setSelectedBetType] = useState('');
-  const { data } = useFetchRacingInfo(selectedBetType);
-  console.log(data, ' DATA');
+  const { data } = useFetchTrackInfo(selectedBetType);
 
   const handleSelectBetType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedBetType(e.target.value);

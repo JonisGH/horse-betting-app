@@ -7,3 +7,37 @@
   border: 1px #333333 solid;
   padding-top: 57px;
 }
+
+.bottomBorder {
+  border-bottom: 1px solid black;
+}
+
+.raceContainer {
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.race-header {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.horse-row {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.horse-row:hover {
+  background-color: #f7f7f7;
+}
+
+.details {
+  padding: 8px 10px;
+  font-style: italic;
+  color: #555;
+  background-color: #f9f9f9;
+}

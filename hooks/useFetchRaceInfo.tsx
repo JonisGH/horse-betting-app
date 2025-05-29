@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react';
-import type { BettingData } from '../types/Types';
 
-export const useFetchRacingInfo = (betType: string) => {
-  const [data, setData] = useState<BettingData | null>(null);
+const useFetchRaceInfo = (trackId: string) => {
+  const [data, setData] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!betType) return;
+    if (!trackId) return;
 
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(
-          `https://www.atg.se/services/racinginfo/v1/api/products/${betType}`,
-        );
-        if (!res.ok) throw new Error(`Failed to fetch data for ${betType}`);
+        const res = await fetch(`https://www.atg.se/services/racinginfo/v1/api/games/${trackId}`);
+        if (!res.ok) throw new Error(`Failed to fetch data for ${trackId}`);
         const json = await res.json();
         setData(json);
       } catch (err) {
@@ -26,7 +23,9 @@ export const useFetchRacingInfo = (betType: string) => {
     };
 
     fetchData();
-  }, [betType]);
+  }, [trackId]);
 
   return { data, loading, error };
 };
+
+export default useFetchRaceInfo;

@@ -50,3 +50,7 @@ export type BettingData = {
   upcoming: UpcomingEntry[];
   results: ResultEntry[];
 };
+
+export type GoodObject = {
+  trackId: string;
+};
