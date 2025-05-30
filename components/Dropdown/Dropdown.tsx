@@ -11,10 +11,11 @@ type DropdownProps = {
   propOptions: PropOption[];
 };
 
-const Dropdown = ({ propOptions, onChange }: DropdownProps) => {
+const Dropdown = (props: DropdownProps) => {
+  const { propOptions, onChange } = props;
   return (
     <select className="dropdown" onChange={onChange}>
-      <option value="">...</option>
+      <option value=""></option>
       {propOptions.map((option) => (
         <option key={option.value} value={option.value}>
           {option.name ?? option.value}

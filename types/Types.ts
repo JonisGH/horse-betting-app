@@ -1,56 +1,22 @@
-export type RaceHorse = {
-  name: string;
+export type SimplifiedHorse = {
+  startNumber: number;
+  horseName: string;
+  driverFirstName: string;
+  driverLastName: string;
+  trainerFirstName: string;
+  trainerLastName: string;
+  fatherName: string;
 };
 
-export type RaceStart = {
+export type SimplifiedRace = {
   number: number;
-  horse: RaceHorse;
-};
-
-export type Race = {
-  id: string;
-  starts: RaceStart[];
-};
-
-export type Track = {
-  id: number;
   name: string;
-};
-
-export type Favorite = {
-  raceId: string;
-  legNumber: number;
-  start: {
-    number: number;
-    name: string;
-    distribution: number;
-  };
-};
-
-export type UpcomingEntry = {
-  id: string;
-  newBettingSystem: boolean;
   startTime: string;
-  tracks: Track[];
-  favorites: Favorite[];
-  addOns: string[];
-  races: Race[];
+  horses: SimplifiedHorse[];
 };
 
-export type ResultEntry = {
+export type SimplifiedTrack = {
   id: string;
-  tracks: Track[];
-  totalToWin: number;
   startTime: string;
-  addOns: string[];
-};
-
-export type BettingData = {
-  betType: string;
-  upcoming: UpcomingEntry[];
-  results: ResultEntry[];
-};
-
-export type GoodObject = {
-  trackId: string;
+  trackName: string;
 };
