@@ -1,0 +1,30 @@
+.table {
+  min-width: 55vw;
+  background-color: #fafafa;
+  display: grid;
+  row-gap: 4px;
+  border: 1px solid #333;
+}
+
+.table:has(.tableRow) {
+  border-bottom: none;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: repeat(3, auto) 1fr;
+  column-gap: 12px;
+  padding: 8px;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.tableHeader {
+  background-color: #475569;
+  color: #fafafa;
+  font-weight: bold;
+}
+
+.tableCell {
+  padding: 4px 0px;
+}
