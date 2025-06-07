@@ -8,6 +8,7 @@
 .tableRow {
   display: grid;
   grid-template-columns: repeat(3, auto) 1fr;
+  min-height: 25px;
   column-gap: 12px;
   padding: 8px;
   align-items: center;
@@ -16,6 +17,7 @@
 
 .tableHeader {
   background-color: #475569;
+  min-height: 25px;
   color: #fafafa;
   font-weight: bold;
 }

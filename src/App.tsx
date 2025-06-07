@@ -36,6 +36,7 @@ function App() {
 
   return (
     <Flex direction="column" gap={'2px'} align="flex-start">
+      {!selectedBetType && <small>Choose a bet type</small>}
       <Flex direction="row" gap={'25px'} align="center">
         <Dropdown
           propOptions={[{ value: 'V75' }, { value: 'V86' }, { value: 'GS75' }]}
@@ -46,7 +47,7 @@ function App() {
 
       {mostRecentProduct && <RaceTrack track={mostRecentProduct} />}
 
-      {raceData &&
+      {raceData ? (
         raceData.map((race: SimplifiedGame, raceIndex: number) => {
           const tableHeader = [race.startTime, race.name];
 
@@ -61,7 +62,10 @@ function App() {
           }));
 
           return <Table header={tableHeader} data={tableData} key={raceIndex} />;
-        })}
+        })
+      ) : (
+        <Table header={[]} />
+      )}
     </Flex>
   );
 }
