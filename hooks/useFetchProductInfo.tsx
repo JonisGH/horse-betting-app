@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useEffect, useState } from 'react';
-import type { SimplifiedTrack } from '../types/Types';
+import type { SimplifiedProduct } from '../types/Types';
 import { formatDate } from '../utils/formatDate';
 
-const useFetchTrackInfo = (betType: string) => {
-  const [data, setData] = useState<SimplifiedTrack[]>([]);
+const useFetchProductInfo = (betType: string) => {
+  const [data, setData] = useState<SimplifiedProduct[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,18 +21,18 @@ const useFetchTrackInfo = (betType: string) => {
         if (!res.ok) throw new Error(`Failed to fetch data for ${betType}`);
         const json = await res.json();
 
-        const simplifiedTracks: SimplifiedTrack[] = json?.upcoming.map(
+        const simplifiedProducts: SimplifiedProduct[] = json?.upcoming.map(
           (upcomingEntry: { id: any; startTime: string; tracks: { name: any }[] }) => ({
             id: upcomingEntry.id,
             startTime:
               formatDate(upcomingEntry.startTime).date +
               ' ' +
               formatDate(upcomingEntry.startTime).time,
-            trackName: upcomingEntry.tracks[0]?.name ?? '',
+            name: upcomingEntry.tracks[0]?.name ?? 'no name',
           }),
         );
 
-        setData(simplifiedTracks);
+        setData(simplifiedProducts);
       } catch (err) {
         setError((err as Error).message);
       } finally {
@@ -46,4 +46,4 @@ const useFetchTrackInfo = (betType: string) => {
   return { data, loading, error };
 };
 
-export default useFetchTrackInfo;
+export default useFetchProductInfo;

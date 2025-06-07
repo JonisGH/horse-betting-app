@@ -1,5 +1,6 @@
 .resultContainer {
   display: inline-flex;
+  margin-bottom: 8px;
   min-width: 100%;
 }
 

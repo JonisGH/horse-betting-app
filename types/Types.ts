@@ -8,15 +8,15 @@ export type SimplifiedHorse = {
   fatherName: string;
 };
 
-export type SimplifiedRace = {
+export type SimplifiedGame = {
   number: number;
   name: string;
   startTime: string;
   horses: SimplifiedHorse[];
 };
 
-export type SimplifiedTrack = {
+export type SimplifiedProduct = {
   id: string;
   startTime: string;
-  trackName: string;
+  name: string;
 };

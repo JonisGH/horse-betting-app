@@ -1,12 +1,19 @@
+import React, { useState } from 'react';
 import './Table.css';
+import type { SimplifiedHorse } from '../../types/Types';
 
 type TableProps = {
   header: string[];
-  data: Array<Array<string | number>>;
+  data: SimplifiedHorse[];
 };
 
 const Table = (props: TableProps) => {
   const { header, data } = props;
+  const [expandedRow, setExpandedRow] = useState<number | null>(null);
+
+  const handleRowClick = (rowIndex: number) => {
+    setExpandedRow(expandedRow === rowIndex ? null : rowIndex);
+  };
 
   return (
     <div className="table">
@@ -18,14 +25,33 @@ const Table = (props: TableProps) => {
         ))}
       </div>
 
-      {data.map((row, rowIndex) => (
-        <div key={rowIndex} className="tableRow">
-          {row.map((cell, cellIndex) => (
-            <div key={cellIndex} className="tableCell">
-              {cell}
+      {data.map((horse, rowIndex) => (
+        <React.Fragment key={rowIndex}>
+          <div
+            className="tableRow"
+            onClick={() => handleRowClick(rowIndex)}
+            style={{ cursor: 'pointer' }}
+          >
+            <div className="tableCell">
+              <span style={{ fontWeight: 'bold' }}>{horse.startNumber}</span>
             </div>
-          ))}
-        </div>
+            <div className="tableCell">{horse.horseName}</div>
+            <div className="tableCell">
+              <span style={{ fontStyle: 'oblique' }}>
+                {horse.driverFirstName} {horse.driverLastName}
+              </span>
+            </div>
+            <span className="chevron">{expandedRow === rowIndex ? '▼' : '▶'}</span>
+          </div>
+          {expandedRow === rowIndex && (
+            <div className={`tableRow expandableRow expanded`}>
+              <div className="tableCell expandedCell" style={{ gridColumn: 'span 4' }}>
+                Trainer: {horse.trainerFirstName} {horse.trainerLastName} <br />
+                Father: {horse.fatherName}
+              </div>
+            </div>
+          )}
+        </React.Fragment>
       ))}
     </div>
   );

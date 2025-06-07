@@ -1,12 +1,7 @@
 .table {
-  min-width: 55vw;
+  width: 55vw;
   background-color: #fafafa;
-  display: grid;
-  row-gap: 4px;
   border: 1px solid #333;
-}
-
-.table:has(.tableRow) {
   border-bottom: none;
 }
 
@@ -27,4 +22,34 @@
 
 .tableCell {
   padding: 4px 0px;
+}
+
+.expandableRow {
+  border-bottom: 1px solid transparent;
+  overflow: hidden;
+  transition:
+    max-height 0.3s,
+    border-bottom-color 0s 0.3s,
+    background-color 0s 0.3s;
+  max-height: 0;
+  padding: 8px;
+  display: grid;
+  background-color: transparent;
+}
+
+.expandableRow.expanded {
+  border-bottom-color: #333;
+  background-color: #d9d8d8;
+  max-height: 200px;
+  padding: 8px;
+  transition:
+    max-height 0.3s,
+    border-bottom-color 0s,
+    background-color 0s;
+}
+
+.chevron {
+  text-align: end;
+  margin-right: 16px;
+  color: #475569bb;
 }
