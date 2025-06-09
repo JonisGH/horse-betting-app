@@ -1,9 +1,10 @@
 .resultContainer {
   display: inline-flex;
+  margin-bottom: 8px;
   min-width: 100%;
 }
 
 .bottomBorder {
   height: 40px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #333;
 }

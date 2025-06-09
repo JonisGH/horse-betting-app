@@ -1,35 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import useFetchTrackInfo from '../hooks/useFetchTrackInfo';
-import useFetchRaceInfo from '../hooks/useFetchRaceInfo';
 import Table from '../components/Table/Table';
 import RaceTrack from '../components/RaceTrack/RaceTrack';
 import Dropdown from '../components/Dropdown/Dropdown';
 import Flex from '../components/Flex/Flex';
-import type { SimplifiedRace, SimplifiedTrack } from '../types/Types';
+import useFetchGameInfo from '../hooks/useFetchGameInfo';
+import useFetchProductInfo from '../hooks/useFetchProductInfo';
+import type { SimplifiedGame, SimplifiedHorse, SimplifiedProduct } from '../types/Types';
 import './App.css';
 
 function App() {
+  const [mostRecentProduct, setMostRecentProduct] = useState<SimplifiedProduct | null>(null);
   const [selectedBetType, setSelectedBetType] = useState('');
   const [trackId, setTrackId] = useState('');
-  const [mostRecentTrack, setMostRecentTrack] = useState<SimplifiedTrack | null>(null);
 
-  const { data, loading } = useFetchTrackInfo(selectedBetType);
-  const { data: raceData } = useFetchRaceInfo(trackId);
-
-  console.log('Most Recent Track:', mostRecentTrack);
-  console.log('RaceData:', raceData);
+  const { data, loading } = useFetchProductInfo(selectedBetType);
+  const { data: raceData } = useFetchGameInfo(trackId);
 
   useEffect(() => {
-    if (data.length > 0 && !loading) {
-      const sorted = [...data].sort(
+    if (data && !loading) {
+      const sorted: SimplifiedProduct[] = [...data].sort(
         (a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime(),
       );
+      const latestProduct = sorted[0];
 
-      const mostRecent = sorted[0];
-
-      if (mostRecent) {
-        setMostRecentTrack(mostRecent);
-        setTrackId(mostRecent.id); // triggers useFetchRaceInfo
+      if (latestProduct) {
+        setMostRecentProduct(latestProduct);
+        setTrackId(latestProduct.id);
       }
     }
   }, [data, loading]);
@@ -39,8 +35,8 @@ function App() {
   };
 
   return (
-    <Flex direction="column" gap={'10px'} align="flex-start">
-      {/* Bet Type Selector */}
+    <Flex direction="column" gap={'2px'} align="flex-start">
+      {!selectedBetType && <small>Choose a bet type</small>}
       <Flex direction="row" gap={'25px'} align="center">
         <Dropdown
           propOptions={[{ value: 'V75' }, { value: 'V86' }, { value: 'GS75' }]}
@@ -49,26 +45,27 @@ function App() {
         <h3>{selectedBetType}</h3>
       </Flex>
 
-      {/* Most Recent RaceTrack */}
-      {mostRecentTrack && <RaceTrack track={mostRecentTrack} />}
+      {mostRecentProduct && <RaceTrack track={mostRecentProduct} />}
 
-      {/* Race Tables for this track */}
-      {raceData &&
-        raceData.map((race: SimplifiedRace, raceIndex: number) => {
+      {raceData ? (
+        raceData.map((race: SimplifiedGame, raceIndex: number) => {
           const tableHeader = [race.startTime, race.name];
 
-          const tableData = race.horses.map((horse) => [
-            horse.startNumber,
-            horse.horseName,
-            `${horse.driverFirstName} ${horse.driverLastName}`,
-          ]);
+          const tableData: SimplifiedHorse[] = race.horses.map((horse: SimplifiedHorse) => ({
+            startNumber: horse.startNumber,
+            horseName: horse.horseName,
+            driverFirstName: horse.driverFirstName,
+            driverLastName: horse.driverLastName,
+            trainerFirstName: horse.trainerFirstName,
+            trainerLastName: horse.trainerLastName,
+            fatherName: horse.fatherName,
+          }));
 
-          return (
-            <div key={raceIndex} style={{ marginBottom: '2rem' }}>
-              <Table header={tableHeader} data={tableData} />
-            </div>
-          );
-        })}
+          return <Table header={tableHeader} data={tableData} key={raceIndex} />;
+        })
+      ) : (
+        <Table header={[]} />
+      )}
     </Flex>
   );
 }
