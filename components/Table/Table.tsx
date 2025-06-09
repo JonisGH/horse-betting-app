@@ -55,7 +55,7 @@ const Table = (props: TableProps) => {
             </React.Fragment>
           ))
         : Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} className="tableRow">
+            <div key={index} className="tableRow" data-testid="skeletonRow">
               <div className="tableCell"></div>
               <div className="tableCell"></div>
               <div className="tableCell"></div>

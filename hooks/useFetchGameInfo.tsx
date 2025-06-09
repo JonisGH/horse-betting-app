@@ -13,9 +13,11 @@ const useFetchRaceInfo = (trackId: string) => {
     if (!trackId) return;
 
     const fetchData = async () => {
+      const baseUrl = import.meta.env.VITE_GAMES_URL;
+
       setLoading(true);
       try {
-        const res = await fetch(`https://www.atg.se/services/racinginfo/v1/api/games/${trackId}`);
+        const res = await fetch(`${baseUrl}${trackId}`);
         if (!res.ok) throw new Error(`Failed to fetch data for ${trackId}`);
         const json = await res.json();
 
