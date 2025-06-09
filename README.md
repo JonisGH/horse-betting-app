@@ -1,4 +1,4 @@
-````markdown
+
 # Horse Betting App
 
 A React-based frontend code challenge for displaying horse racing and betting information.
@@ -109,4 +109,3 @@ horse-betting-app/
 - The `.env` file is included in version control for code challenge review purposes.
 - All API URLs are configurable via environment variables.
 - The UI is responsive and interactive, with expandable rows for horse details.
-````
