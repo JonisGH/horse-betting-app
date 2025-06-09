@@ -91,6 +91,10 @@ horse-betting-app/
 ├── vite.config.ts
 └── ...
 ```
+## Build Configuration
+
+This project uses [Vite](https://vitejs.dev/) as the build tool.  
+All configuration is openly available in `vite.config.ts`.  
 
 ## Testing
 
