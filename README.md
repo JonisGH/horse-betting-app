@@ -1,7 +1,10 @@
-
 # Horse Betting App
 
-A React-based frontend code challenge for displaying horse racing and betting information.
+A React + TypeScript frontend application built with Vite, focusing on data presentation for horse racing and betting information. The app demonstrates dynamic UI components, data fetching, and state management while displaying real-time race track data from ATG APIs.
+
+## Note on CORS and Local Proxy
+
+**Important:** The ATG API endpoints are restricted by CORS policies and cannot be called directly from the browser. This app uses a Vite dev server proxy to bypass this limitation during development. The proxy redirects requests from `/api/...` to `https://www.atg.se/...`, allowing the app to function seamlessly in the development environment while maintaining a production-like architecture.
 
 ## Features
 
@@ -50,8 +53,8 @@ nvm use
    A `.env` file is already provided in the project root:
 
    ```
-   VITE_GAMES_URL=https://www.atg.se/services/racinginfo/v1/api/games/
-   VITE_PRODUCT_URL=https://www.atg.se/services/racinginfo/v1/api/products/
+   VITE_GAMES_URL=/api/services/racinginfo/v1/api/games/
+   VITE_PRODUCT_URL=/api/services/racinginfo/v1/api/products/
    ```
 
    > **Note:**  
@@ -65,6 +68,8 @@ nvm use
    # or
    yarn dev
    ```
+
+   The Vite dev server will automatically proxy API requests from `/api/...` to the actual ATG endpoints.
 
 5. **Open the app:**  
    Visit [http://localhost:5173](http://localhost:5173) in your browser.

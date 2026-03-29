@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Table.css';
 import type { SimplifiedHorse } from '../../types/Types';
 
@@ -14,6 +14,12 @@ const Table = (props: TableProps) => {
   const handleRowClick = (rowIndex: number) => {
     setExpandedRow(expandedRow === rowIndex ? null : rowIndex);
   };
+
+  useEffect(() => {
+    return () => {
+      setExpandedRow(null);
+    };
+  }, [data]);
 
   return (
     <div className="table">
