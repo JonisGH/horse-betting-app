@@ -1,8 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useEffect, useState } from 'react';
 import type { SimplifiedProduct } from '../types/Types';
 import { formatDate } from '../utils/formatDate';
+
+type ProductTrack = {
+  name: string;
+};
+
+type ProductUpcomingApi = {
+  id: string;
+  startTime: string;
+  tracks: ProductTrack[];
+};
+
+type ProductApiResponse = {
+  upcoming: ProductUpcomingApi[];
+};
 
 const useFetchProductInfo = (betType: string) => {
   const [data, setData] = useState<SimplifiedProduct[]>([]);
@@ -19,10 +31,10 @@ const useFetchProductInfo = (betType: string) => {
       try {
         const res = await fetch(`${baseUrl}${betType}`);
         if (!res.ok) throw new Error(`Failed to fetch data for ${betType}`);
-        const json = await res.json();
+        const json = (await res.json()) as ProductApiResponse;
 
-        const simplifiedProducts: SimplifiedProduct[] = json?.upcoming.map(
-          (upcomingEntry: { id: any; startTime: string; tracks: { name: any }[] }) => ({
+        const simplifiedProducts: SimplifiedProduct[] = json.upcoming.map(
+          (upcomingEntry: ProductUpcomingApi) => ({
             id: upcomingEntry.id,
             startTime:
               formatDate(upcomingEntry.startTime).date +
@@ -33,8 +45,12 @@ const useFetchProductInfo = (betType: string) => {
         );
 
         setData(simplifiedProducts);
-      } catch (err) {
-        setError((err as Error).message);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred while fetching product info.');
+        }
       } finally {
         setLoading(false);
       }

@@ -1,10 +1,14 @@
 # Horse Betting App
 
-A React + TypeScript frontend application built with Vite, focusing on data presentation for horse racing and betting information. The app demonstrates dynamic UI components, data fetching, and state management while displaying real-time race track data from ATG APIs.
+A React + TypeScript frontend application built with Vite. It presents horse racing and betting data from the ATG API in a compact, interactive UI.
+
+---
 
 ## Note on CORS and Local Proxy
 
-**Important:** The ATG API endpoints are restricted by CORS policies and cannot be called directly from the browser. This app uses a Vite dev server proxy to bypass this limitation during development. The proxy redirects requests from `/api/...` to `https://www.atg.se/...`, allowing the app to function seamlessly in the development environment while maintaining a production-like architecture.
+**Important:** The ATG API is blocked by browser CORS in development. This repo uses Vite dev server proxying so the app can call `/api/...` routes locally, which are forwarded to `https://www.atg.se/...`.
+
+---
 
 ## Features
 
@@ -19,12 +23,11 @@ A React + TypeScript frontend application built with Vite, focusing on data pres
 ### Prerequisites
 
 - [nvm](https://github.com/nvm-sh/nvm) (recommended) — see `.nvmrc` for required Node version
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) to install dependencies and run scripts
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) for package management
 
 ### Node Version
 
-This project includes an `.nvmrc` file specifying the recommended Node.js version (e.g., `22.15.0`).  
-To use it:
+This project includes `.nvmrc` (e.g., `22.15.0`).
 
 ```bash
 nvm install
@@ -33,51 +36,49 @@ nvm use
 
 ### Installation
 
-1. **Clone the repository:**
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/JonisGH/horse-betting-app.git
    cd horse-betting-app
    ```
 
-2. **Install dependencies:**
+2. Install dependencies:
 
    ```bash
    npm install
-   # or
-   yarn install
    ```
 
-3. **Set up environment variables:**
+# or
 
-   A `.env` file is already provided in the project root:
+yarn install
 
-   ```
-   VITE_GAMES_URL=/api/services/racinginfo/v1/api/games/
-   VITE_PRODUCT_URL=/api/services/racinginfo/v1/api/products/
-   ```
+````
 
-   > **Note:**  
-   > In a real project, the `.env` file should be added to `.gitignore` to avoid committing secrets.  
-   > For this code challenge, it is tracked for simplicity and easier review.
+3. Set up environment variables in `.env` (already included):
 
-4. **Start the development server:**
+```bash
+VITE_GAMES_URL=/api/services/racinginfo/v1/api/games/
+VITE_PRODUCT_URL=/api/services/racinginfo/v1/api/products/
+````
+
+> **Note:** `.env` is tracked here for challenge review, but usually this should be gitignored.
+
+4. Start the development server:
 
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
-   The Vite dev server will automatically proxy API requests from `/api/...` to the actual ATG endpoints.
+# or
 
-5. **Open the app:**  
-   Visit [http://localhost:5173](http://localhost:5173) in your browser.
-
-## Project Structure
+yarn dev
 
 ```
-horse-betting-app/
+
+5. Open the app:
+
+- [http://localhost:5173](http://localhost:5173)
 ├── components/
 │   ├── Table/
 │   ├── RaceTrack/
@@ -96,10 +97,11 @@ horse-betting-app/
 ├── vite.config.ts
 └── ...
 ```
+
 ## Build Configuration
 
 This project uses [Vite](https://vitejs.dev/) as the build tool.  
-All configuration is openly available in `vite.config.ts`.  
+All configuration is openly available in `vite.config.ts`.
 
 ## Testing
 
